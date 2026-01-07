@@ -30,8 +30,13 @@
         mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         
         $conexion = mysqli_init();
+        if (!$conexion) {
+            die('mysqli_init failed');
+        }
+        
         mysqli_ssl_set($conexion, NULL, NULL, NULL, NULL, NULL);
-        mysqli_real_connect(
+        
+        $connected = mysqli_real_connect(
             $conexion,
             getenv('MYSQL_HOST'),
             getenv('MYSQL_USER'),
@@ -41,21 +46,25 @@
             NULL,
             MYSQLI_CLIENT_SSL
         );
-
+        
+        if (!$connected) {
+            die('Connect Error: ' . mysqli_connect_error());
+        }
+        
         $cadenaSQL = "select * from s_customer";
         $resultado = mysqli_query($conexion, $cadenaSQL);
-
+        
         while ($fila = mysqli_fetch_object($resultado)) {
-         echo "<tr><td> " .$fila->name . 
-         "</td><td>" . $fila->credit_rating .
-         "</td><td>" . $fila->address .
-         "</td><td>" . $fila->city .
-         "</td><td>" . $fila->state .
-         "</td><td>" . $fila->country .
-         "</td><td>" . $fila->zip_code .
-         "</td></tr>";
-       }
-       ?>
+            echo "<tr><td> " .$fila->name . 
+            "</td><td>" . $fila->credit_rating .
+            "</td><td>" . $fila->address .
+            "</td><td>" . $fila->city .
+            "</td><td>" . $fila->state .
+            "</td><td>" . $fila->country .
+            "</td><td>" . $fila->zip_code .
+            "</td></tr>";
+        }
+        ?>
      </tbody>
    </table>
  </div>
