@@ -27,44 +27,31 @@
       </thead>
       <tbody>
         <?php
-        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-        
-        $conexion = mysqli_init();
-        if (!$conexion) {
-            die('mysqli_init failed');
-        }
-        
-        mysqli_ssl_set($conexion, NULL, NULL, NULL, NULL, NULL);
-        
-        $connected = mysqli_real_connect(
-            $conexion,
-            getenv('MYSQL_HOST'),
-            getenv('MYSQL_USER'),
-            getenv('MYSQL_PASSWORD'),
-            "SG",
-            3306,
-            NULL,
-            MYSQLI_CLIENT_SSL
-        );
-        
-        if (!$connected) {
-            die('Connect Error: ' . mysqli_connect_error());
-        }
-        
-        $cadenaSQL = "select * from s_customer";
-        $resultado = mysqli_query($conexion, $cadenaSQL);
-        
-        while ($fila = mysqli_fetch_object($resultado)) {
-            echo "<tr><td> " .$fila->name . 
-            "</td><td>" . $fila->credit_rating .
-            "</td><td>" . $fila->address .
-            "</td><td>" . $fila->city .
-            "</td><td>" . $fila->state .
-            "</td><td>" . $fila->country .
-            "</td><td>" . $fila->zip_code .
-            "</td></tr>";
-        }
-        ?>
+          $conexion = mysqli_connect(
+              getenv('MYSQL_HOST'), 
+              getenv('MYSQL_USER'), 
+              getenv('MYSQL_PASSWORD'), 
+              "SG"
+          );
+          
+          if (!$conexion) {
+              die("Connection failed: " . mysqli_connect_error());
+          }
+          
+          $cadenaSQL = "select * from s_customer";
+          $resultado = mysqli_query($conexion, $cadenaSQL);
+          
+          while ($fila = mysqli_fetch_object($resultado)) {
+              echo "<tr><td> " .$fila->name . 
+              "</td><td>" . $fila->credit_rating .
+              "</td><td>" . $fila->address .
+              "</td><td>" . $fila->city .
+              "</td><td>" . $fila->state .
+              "</td><td>" . $fila->country .
+              "</td><td>" . $fila->zip_code .
+              "</td></tr>";
+          }
+          ?>
      </tbody>
    </table>
  </div>
