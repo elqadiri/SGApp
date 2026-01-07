@@ -27,21 +27,20 @@
       </thead>
       <tbody>
         <?php
-
-      mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-      
-      $conexion = mysqli_init();
-      mysqli_ssl_set($conexion, NULL, NULL, NULL, NULL, NULL);
-      mysqli_real_connect(
-          $conexion,
-          getenv('MYSQL_HOST'),
-          getenv('MYSQL_USER'),
-          getenv('MYSQL_PASSWORD'),
-          "SG",
-          3306,
-          NULL,
-          MYSQLI_CLIENT_SSL
-      );
+        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+        
+        $conexion = mysqli_init();
+        mysqli_ssl_set($conexion, NULL, NULL, NULL, NULL, NULL);
+        mysqli_real_connect(
+            $conexion,
+            getenv('MYSQL_HOST'),
+            getenv('MYSQL_USER'),
+            getenv('MYSQL_PASSWORD'),
+            "SG",
+            3306,
+            NULL,
+            MYSQLI_CLIENT_SSL
+        );
 
         $cadenaSQL = "select * from s_customer";
         $resultado = mysqli_query($conexion, $cadenaSQL);
@@ -65,4 +64,3 @@
  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 </body>
 </html>
-
